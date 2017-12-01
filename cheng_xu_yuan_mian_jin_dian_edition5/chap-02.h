@@ -367,5 +367,68 @@ P_NODE link_list_sum_v2(P_NODE num1, P_NODE num2)
     return ret_list;
 }
 
+// 2.6
+NODE* link_list_with_loop_create(int *p_data, int len)
+{
+    NODE *head = (NODE*)malloc(sizeof(NODE));
+    head->data = len;
+    head->p_next = nullptr;
+    P_NODE tail = head;
+    for(int i = 0; i < len; i++)
+    {
+        P_NODE p = (P_NODE)malloc(sizeof(NODE));
+        if(nullptr == p)
+        {
+            return nullptr;
+        }
+        p->data = *p_data;
+        p->p_next = head;
+        tail->p_next = p;
+        tail = p;
+        p_data++;
+    }
+    return head;
+}
+void link_list_with_loop_print(P_NODE head)
+{
+    if(nullptr == head) return ;
+    std::cout << "list(len=" << head->data << "):";
+    P_NODE p = head->p_next;
+    while(p != head)
+    {
+        std::cout << p->data << "->";
+        p = p->p_next;
+    }
+    std::cout << std::endl;
+}
+P_NODE link_list_find_loop(P_NODE head)
+{
+    P_NODE fastRunner = head;
+    P_NODE slowRunner = head;
+    while(fastRunner != nullptr && fastRunner->p_next != nullptr)
+    {
+        slowRunner = slowRunner->p_next;
+        fastRunner = fastRunner->p_next->p_next;
+        if(slowRunner == fastRunner)
+        {
+            break;
+        }
+    }
+    if(fastRunner == nullptr || fastRunner->p_next == nullptr)
+    {
+        return nullptr;
+    }
+
+    slowRunner = head;
+    while(slowRunner != fastRunner)
+    {
+        slowRunner = slowRunner->p_next;
+        fastRunner = fastRunner->p_next;
+    }
+    return fastRunner;
+}
+
+
+// 2.7
 
 #endif // CHAP02_H

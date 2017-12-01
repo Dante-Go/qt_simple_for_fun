@@ -29,5 +29,11 @@ int main()
 ////    link_list_print(link_list_sum(num1_link_list, num2_link_list));
 //    link_list_print(link_list_sum_v2(num1_link_list, num2_link_list));
 
+    int arr_loop[10] = {1, 2, 3, 4, 5, 6, 7, 8, 9, 1};
+    P_NODE loop_link_list = link_list_with_loop_create(arr_loop, 10);
+    link_list_with_loop_print(loop_link_list);
+    cout << link_list_find_loop(loop_link_list) << endl;
+    cout << loop_link_list << endl;
+
     return 0;
 }
